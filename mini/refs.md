@@ -3,7 +3,7 @@
 ## Overview
 
 - [Internet Searching by Peter Norvig](https://www.norvig.com/InternetSearching.pdf)
-- [Hypersearching the Web](Hypersearching the Web)
+- [Hypersearching the Web](https://www.cs.cornell.edu/home/kleinber/sciam99.html)
 
 ## Updates and Trends
 
