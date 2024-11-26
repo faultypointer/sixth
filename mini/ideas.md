@@ -2,6 +2,8 @@
 
 ## Search Engine
 
+> **_NOTE:_** We decided to go with this one
+
 - pros
   - great project
 - cons
