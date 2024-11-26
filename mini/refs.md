@@ -13,3 +13,7 @@
 
 - [WordNet](https://direct.mit.edu/books/edited-volume/1928/WordNetAn-Electronic-Lexical-Database)
 -
+
+## Extras
+
+- [More References](https://github.com/open-guides/og-search-engineering)
