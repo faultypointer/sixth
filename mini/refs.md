@@ -17,3 +17,4 @@
 ## Extras
 
 - [More References](https://github.com/open-guides/og-search-engineering)
+- [Advice on building search engine - reddit](https://www.reddit.com/r/computerscience/comments/qzwb8e/any_advice_on_building_a_search_engine/)
