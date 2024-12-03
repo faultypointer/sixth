@@ -1,5 +1,6 @@
 {
-  description = "An empty flake template that you can adapt to your own environment";
+  description =
+    "An empty flake template that you can adapt to your own environment";
 
   # Flake inputs
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -16,23 +17,22 @@
       ];
 
       # Helper to provide system-specific attributes
-      forEachSupportedSystem = f: nixpkgs.lib.genAttrs supportedSystems (system: f {
-        pkgs = import nixpkgs { inherit system; };
-      });
-    in
-    {
+      forEachSupportedSystem = f:
+        nixpkgs.lib.genAttrs supportedSystems
+        (system: f { pkgs = import nixpkgs { inherit system; }; });
+    in {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
           # The Nix packages provided in the environment
           # Add any you need here
-          packages = with pkgs; [ ];
+          packages = with pkgs;
+            [ python312 jupyter-all ] ++ (with pkgs.python312Packages; [ ipython numpy ]);
 
           # Set any environment variables for your dev shell
           env = { };
 
           # Add any shell logic you want executed any time the environment is activated
-          shellHook = ''
-          '';
+          shellHook = "";
         };
       });
     };
