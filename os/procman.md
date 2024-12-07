@@ -64,13 +64,61 @@ graph LR
     Running -->|2. | Ready
     Ready -->|3. | Running
     Blocked -->|4. | Ready
-
 ```
 
+```
 1. Process blocks for input
 2. Scheduler picks another process to run
 3. Scheduler picks this process
 4. Input becomes available
 
 ```
-```
+
+### Implementation of Processes
+
+- os maintains a table called process table (process control blocks) with one entry per process
+- each entry contains information about process' state:
+  - program counter
+  - stack pointer
+  - memory allocations
+  - status of open files
+  - accounting and scheduling information
+  - everything else that must be saved when context switching
+
+Example
+
+| Process Management | Memory Management | File Management |
+| ------------------ | ----------------- | --------------- |
+| Registers | Pointer to text segment info | Root Directory |
+| Program Counter | Pointer to data segment info | Working Directory |
+| Program Status word | Pointer to stack segment info | File descriptors |
+| Stack Pointer | | User ID |
+| Process State | | Group ID |
+| Priority | | |
+| Scheduling Parameters | | |
+| Process ID | | |
+| Parent Group | | |
+| Parent Process | | |
+| Signals | | |
+| Time when process started | | |
+| CPU time used | | |
+| Children's CPU time | | |
+| Time of next alarm | | |
+
+#### When interrupt occurs
+
+1. Hardware stacks program counter, etc.
+2. Hardware loads new program counter from interrupt vector
+3. Assembly language procedure saves registers
+4. Assembly language procedure sets up new stack
+5. C interrupt service runs
+6. Scheduler decides which process to run next
+7. C procedure returns to the assembly code
+8. Assembly language procedure starts up new current process
+
+### Multiprogramming Modeling
+
+- CPU utilization = $1 - p^n$
+- Where
+  - p = fraction of process' time it waits for an I/O
+  - n = no of processes in memory at a time
