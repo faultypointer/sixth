@@ -156,7 +156,7 @@ Example
   - attributes include stack size, scheduling parameters, other items needed to use thread
 - Pthreads function calls
 
-  - | Thread call | Description |
+  -  | Thread call | Description |
      | ----------- | ----------- |
      | Pthread_create | Create a new thread |
      | Pthread_exit | Terminate the calling thread |
