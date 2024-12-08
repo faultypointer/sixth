@@ -122,3 +122,45 @@ Example
 - Where
   - p = fraction of process' time it waits for an I/O
   - n = no of processes in memory at a time
+
+### Threads
+
+- process within a process, for mutiple threads of control in same address space
+- Why Threads?
+  - simpler programming model for applications that needs to do multiple things at the same time
+  - easier and faster to create and destroy than processes
+  - preformance (specially on system with multiple cpus)
+
+### The Classical Thread Model
+
+- Process model is based on two independent concepts
+  - resource grouping: keeping related resource (program text, data, open files etc.) together
+  - execution: process has a thread of execution (*thread*) containing a program counter, registers, stack
+
+  - | Per process items | Per thread items |
+    | ----------------- | ---------------- |
+    | Address space | Program counter |
+    | Global variables | Register |
+    | Open files | Stack |
+    | Child processes | State |
+    | Pending alarms | |
+    | Signals and signal handlers | |
+    | Accounting information | |
+
+- Threads are the actual entities scheduled for execution on the CPU.
+- threads share address space and other resources
+
+### POSIX Threads
+
+- Each Pthreads thread has an identifier, a set of registers (pc included), set of attributes (stored in a structure)
+  - attributes include stack size, scheduling parameters, other items needed to use thread
+- Pthreads function calls
+
+  - | Thread call | Description |
+     | ----------- | ----------- |
+     | Pthread_create | Create a new thread |
+     | Pthread_exit | Terminate the calling thread |
+     | Pthread_join | Wait for a specific thread to exit |
+     | Pthread_yield | Release the CPU to let another thread run |
+     | Pthread_attr_init | Create and initalize a thread's attribute structure |
+     | Pthread_arrt_destroy | Remove a thread's attribute structure |
