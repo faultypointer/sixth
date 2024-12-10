@@ -47,14 +47,19 @@ def solve_cryptarithmetic(words, result):
     # Set leading letters' domains to not include 0
     for word in words:
         domain[word[0]] = list(range(1, 10))  # First letter cannot be 0
-    domain[result[0]] = list(range(1, 10))  # First letter of result cannot be 0
+    if len(result) == max(len(words[0]), len(words[1])) + 1:
+        domain[result[0]] = [1]    
+    else:    
+        domain[result[0]] = list(range(1, 10))  # First letter of result cannot be 0
+    # domain[result[0]] = list(range(1, 10))  # First letter of result cannot be 0
+
 
     assignment = {}
     solution = backtrack(assignment, letters, domain, words, result)
     return solution if solution else "No solution found"
 
 # Example usage
-words = ["SEND", "MORE"]
-result = "MONEY"
+words = ["APPLE", "GRAPE"]
+result = "CHERRY"
 solution = solve_cryptarithmetic(words, result)
 print(solution)
