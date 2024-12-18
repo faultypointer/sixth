@@ -21,20 +21,15 @@ def backtrack(assignment, letters, domain, words, result):
     variable = min(unassigned, key=lambda x: len(domain[x]))
 
     for value in domain[variable]:
-        # Check leading zero constraints
-        if (variable == words[0][0] and value == 0) or (variable == result[0] and value == 0):
-            continue
-
         # Assign the value
         assignment[variable] = value
 
-        # Forward checking: adjust domains
         new_domain = {k: [v for v in domain[k] if v not in assignment.values()] for k in letters}
         found_solution = backtrack(assignment, letters, new_domain, words, result)
         if found_solution is not None:
             return found_solution
-
-        # Backtrack
+        
+        # remove assignment
         del assignment[variable]
 
     return None
