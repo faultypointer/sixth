@@ -1,2 +1,3 @@
 .direnv
 targets/
+__pycache__
