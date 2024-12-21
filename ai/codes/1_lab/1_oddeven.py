@@ -7,5 +7,5 @@ def odd_or_even(num):
 
 if __name__ == "__main__":
     num = int(input("Please enter a number: "))
-    print("number is ", odd_or_even(num))
+    print("number is ", odd_or_even(num)
     

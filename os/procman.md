@@ -156,7 +156,7 @@ Example
   - attributes include stack size, scheduling parameters, other items needed to use thread
 - Pthreads function calls
 
-  -  | Thread call | Description |
+  - | Thread call | Description |
      | ----------- | ----------- |
      | Pthread_create | Create a new thread |
      | Pthread_exit | Terminate the calling thread |
@@ -164,3 +164,11 @@ Example
      | Pthread_yield | Release the CPU to let another thread run |
      | Pthread_attr_init | Create and initalize a thread's attribute structure |
      | Pthread_arrt_destroy | Remove a thread's attribute structure |
+
+### Threads in User Space
+
+- from kernel's pov, its managing single threded processes.
+
+- **Advantages:**
+  - can be inplemented on system that does not support threads
+- **Disdavantages:**
