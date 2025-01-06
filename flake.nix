@@ -26,7 +26,17 @@
           # The Nix packages provided in the environment
           # Add any you need here
           packages = with pkgs;
-            [ python312 jupyter-all ] ++ (with pkgs.python312Packages; [ ipython numpy tkinter ]);
+            [ python312 jupyter-all ] ++ (with pkgs.python312Packages; [
+              ipython
+              numpy
+              tkinter
+              scikit-learn
+              scipy
+              pandas
+              matplotlib
+              seaborn
+              ipykernel
+            ]);
 
           # Set any environment variables for your dev shell
           env = { };
