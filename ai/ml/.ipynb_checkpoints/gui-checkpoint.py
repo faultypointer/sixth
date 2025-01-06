@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 
 # Load the pretrained model
-with open("knnmodel.pkl", "rb") as file:
+with open("model.pkl", "rb") as file:
     model = pickle.load(file)
 
 # Function to make predictions
