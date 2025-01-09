@@ -1,3 +1,4 @@
 .direnv
 targets/
 __pycache__
+.ipynv_checkpoints
