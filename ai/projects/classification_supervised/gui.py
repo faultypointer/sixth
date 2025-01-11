@@ -1,255 +1,175 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from tkinter import font
 import pickle
 import numpy as np
 
-class ModernWidget(ttk.Frame):
-    def __init__(self, parent, text, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-        self.configure(padding="10")
-        self.configure(relief="ridge", borderwidth=1)
-        
-        # Header
-        header = ttk.Label(self, text=text, style="Header.TLabel")
-        header.pack(fill="x", pady=(0, 10))
-
-class KidneyDiseasePredictor:
+class KidneyDiseasePredictorGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Kidney Disease Risk Assessment Tool")
-        self.root.geometry("900x800")
-        self.root.configure(bg='#f0f2f5')
+        self.root.title("Chronic Kidney Disease Predictor")
+        self.root.geometry("800x900")
         
-        # Configure styles
-        self.setup_styles()
+        # Configure style
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure('TLabel', padding=5, font=('Arial', 10))
+        style.configure('TButton', padding=5, font=('Arial', 10, 'bold'))
+        style.configure('TEntry', padding=5)
+        style.configure('Header.TLabel', font=('Arial', 14, 'bold'))
         
-        # Create main container
-        main_container = ttk.Frame(root, padding="20")
-        main_container.pack(fill=tk.BOTH, expand=True)
+        # Create main frame
+        main_frame = ttk.Frame(root, padding="20")
+        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
-        # Create header
-        header_frame = ttk.Frame(main_container)
-        header_frame.pack(fill="x", pady=(0, 20))
+        # Title
+        title_label = ttk.Label(main_frame, text="Chronic Kidney Disease Predictor", style='Header.TLabel')
+        title_label.grid(row=0, column=0, columnspan=2, pady=20)
         
-        title = ttk.Label(
-            header_frame, 
-            text="Kidney Disease Risk Assessment", 
-            style="Title.TLabel"
-        )
-        title.pack()
-        
-        subtitle = ttk.Label(
-            header_frame,
-            text="Enter patient information below for analysis",
-            style="Subtitle.TLabel"
-        )
-        subtitle.pack()
-        
-        # Create scrollable frame
-        canvas = tk.Canvas(main_container, bg='#f0f2f5', highlightthickness=0)
-        scrollbar = ttk.Scrollbar(main_container, orient="vertical", command=canvas.yview)
-        self.scrollable_frame = ttk.Frame(canvas, padding="10")
-        
-        self.scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
-        
-        canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw", width=850)
-        canvas.configure(yscrollcommand=scrollbar.set)
-        
-        # Pack scrollbar components
-        scrollbar.pack(side="right", fill="y")
-        canvas.pack(side="left", fill="both", expand=True)
-        
-        # Dictionary to store input variables
-        self.inputs = {}
-        
-        # Group fields by category
-        self.field_groups = {
-            'Demographics': {
-                'age': {'type': 'float', 'label': 'Age (years)'},
-                'bp': {'type': 'float', 'label': 'Blood Pressure (mm/Hg)'}
-            },
-            'Urinalysis': {
-                'sg': {'type': 'combo', 'label': 'Specific Gravity', 'values': [1.005, 1.010, 1.015, 1.020, 1.025]},
-                'al': {'type': 'combo', 'label': 'Albumin', 'values': [0, 1, 2, 3, 4, 5]},
-                'su': {'type': 'combo', 'label': 'Sugar', 'values': [0, 1, 2, 3, 4, 5]},
-                'rbc': {'type': 'combo', 'label': 'Red Blood Cells', 'values': ['normal', 'abnormal']},
-                'pc': {'type': 'combo', 'label': 'Pus Cell', 'values': ['normal', 'abnormal']},
-                'pcc': {'type': 'combo', 'label': 'Pus Cell Clumps', 'values': ['present', 'notpresent']},
-                'ba': {'type': 'combo', 'label': 'Bacteria', 'values': ['present', 'notpresent']}
-            },
-            'Blood Tests': {
-                'bgr': {'type': 'float', 'label': 'Blood Glucose Random (mgs/dl)'},
-                'bu': {'type': 'float', 'label': 'Blood Urea (mgs/dl)'},
-                'sc': {'type': 'float', 'label': 'Serum Creatinine (mgs/dl)'},
-                'sod': {'type': 'float', 'label': 'Sodium (mEq/L)'},
-                'pot': {'type': 'float', 'label': 'Potassium (mEq/L)'},
-                'hemo': {'type': 'float', 'label': 'Hemoglobin (gms)'},
-                'pcv': {'type': 'float', 'label': 'Packed Cell Volume'},
-                'wbcc': {'type': 'float', 'label': 'White Blood Cell Count (cells/cumm)'},
-                'rbcc': {'type': 'float', 'label': 'Red Blood Cell Count (millions/cmm)'}
-            },
-            'Medical History': {
-                'htn': {'type': 'combo', 'label': 'Hypertension', 'values': ['no', 'yes']},
-                'dm': {'type': 'combo', 'label': 'Diabetes Mellitus', 'values': ['no', 'yes']},
-                'cad': {'type': 'combo', 'label': 'Coronary Artery Disease', 'values': ['no', 'yes']},
-                'appet': {'type': 'combo', 'label': 'Appetite', 'values': ['good', 'poor']},
-                'pe': {'type': 'combo', 'label': 'Pedal Edema', 'values': ['no', 'yes']},
-                'ane': {'type': 'combo', 'label': 'Anemia', 'values': ['no', 'yes']}
-            }
+        # Define encoding dictionaries based on ordinal.categories_
+        self.encoding_dict = {
+            'sg': {'1.005': 0, '1.010': 1, '1.015': 2, '1.020': 3, '1.025': 4, '?': 5},
+            'al': {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '?': 5},
+            'su': {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '?': 6},
+            'rbc': {'?': 0, 'abnormal': 1, 'normal': 2},
+            'pc': {'?': 0, 'abnormal': 1, 'normal': 2},
+            'pcc': {'?': 0, 'notpresent': 1, 'present': 2},
+            'ba': {'?': 0, 'notpresent': 1, 'present': 2},
+            'htn': {'?': 0, 'no': 1, 'yes': 2},
+            'dm': {'?': 0, 'no': 1, 'yes': 2},
+            'cad': {'?': 0, 'no': 1, 'yes': 2},
+            'appet': {'?': 0, 'good': 1, 'poor': 2},
+            'pe': {'?': 0, 'no': 1, 'yes': 2},
+            'ane': {'?': 0, 'no': 1, 'yes': 2}
         }
         
-        # Create input fields by group
-        self.create_grouped_inputs()
+        # Create form fields
+        self.create_form_fields(main_frame)
         
-        # Create predict button with modern styling
-        button_frame = ttk.Frame(main_container, padding="20")
-        button_frame.pack(fill="x", pady=20)
+        # Create predict button
+        predict_button = ttk.Button(main_frame, text="Predict", command=self.predict)
+        predict_button.grid(row=len(self.entries)+1, column=0, columnspan=2, pady=20)
         
-        predict_btn = ttk.Button(
-            button_frame,
-            text="Generate Prediction",
-            command=self.predict,
-            style="Accent.TButton"
-        )
-        predict_btn.pack(pady=10)
-        
+        # Load the model
         try:
-            with open('model.pkl', 'rb') as f:
-                self.model = pickle.load(f)
+            with open('model.pkl', 'rb') as file:
+                self.model = pickle.load(file)
         except FileNotFoundError:
             messagebox.showerror("Error", "Model file (model.pkl) not found!")
             self.model = None
 
-    def setup_styles(self):
-        style = ttk.Style()
+    def create_form_fields(self, parent):
+        # Define all fields with their types and options
+        self.fields = {
+            'age': {'type': 'float', 'label': 'Age (years)'},
+            'bp': {'type': 'float', 'label': 'Blood Pressure (mm/Hg)'},
+            'sg': {'type': 'combo', 'label': 'Specific Gravity', 
+                   'values': ['1.005', '1.010', '1.015', '1.020', '1.025']},
+            'al': {'type': 'combo', 'label': 'Albumin', 
+                   'values': ['0', '1', '2', '3', '4']},
+            'su': {'type': 'combo', 'label': 'Sugar', 
+                   'values': ['0', '1', '2', '3', '4', '5']},
+            'rbc': {'type': 'combo', 'label': 'Red Blood Cells', 
+                    'values': ['normal', 'abnormal']},
+            'pc': {'type': 'combo', 'label': 'Pus Cell', 
+                   'values': ['normal', 'abnormal']},
+            'pcc': {'type': 'combo', 'label': 'Pus Cell Clumps', 
+                    'values': ['notpresent', 'present']},
+            'ba': {'type': 'combo', 'label': 'Bacteria', 
+                   'values': ['notpresent', 'present']},
+            'bgr': {'type': 'float', 'label': 'Blood Glucose Random (mgs/dl)'},
+            'bu': {'type': 'float', 'label': 'Blood Urea (mgs/dl)'},
+            'sc': {'type': 'float', 'label': 'Serum Creatinine (mgs/dl)'},
+            'sod': {'type': 'float', 'label': 'Sodium (mEq/L)'},
+            'pot': {'type': 'float', 'label': 'Potassium (mEq/L)'},
+            'hemo': {'type': 'float', 'label': 'Hemoglobin (gms)'},
+            'pcv': {'type': 'float', 'label': 'Packed Cell Volume'},
+            'wbcc': {'type': 'float', 'label': 'White Blood Cell Count (cells/cumm)'},
+            'rbcc': {'type': 'float', 'label': 'Red Blood Cell Count (millions/cmm)'},
+            'htn': {'type': 'combo', 'label': 'Hypertension', 
+                    'values': ['no', 'yes']},
+            'dm': {'type': 'combo', 'label': 'Diabetes Mellitus', 
+                   'values': ['no', 'yes']},
+            'cad': {'type': 'combo', 'label': 'Coronary Artery Disease', 
+                    'values': ['no', 'yes']},
+            'appet': {'type': 'combo', 'label': 'Appetite', 
+                      'values': ['good', 'poor']},
+            'pe': {'type': 'combo', 'label': 'Pedal Edema', 
+                   'values': ['no', 'yes']},
+            'ane': {'type': 'combo', 'label': 'Anemia', 
+                    'values': ['no', 'yes']}
+        }
         
-        default_font = font.nametofont("TkDefaultFont")
-        
-        # Configure colors
-        style.configure(".", font=(default_font.actual("family"), 10))
-        style.configure("Title.TLabel", font=(default_font.actual("family"), 24, "bold"), foreground="#1a237e")
-        style.configure("Subtitle.TLabel", font=(default_font.actual("family"), 12), foreground="#424242")
-        style.configure("Header.TLabel", font=(default_font.actual("family"), 14, "bold"), foreground="#1a237e")
-        style.configure("Section.TFrame", background="#ffffff")
-        
-        # Button styling
-        style.configure("Accent.TButton",
-                        font=(default_font.actual("family"), 12),
-                        padding=10)
-        
-        # Entry styling
-        style.configure("TEntry", padding=5)
-        style.configure("TCombobox", padding=5)
+        # Create and store entry widgets
+        self.entries = {}
+        for i, (field, props) in enumerate(self.fields.items()):
+            row = i + 1
+            label = ttk.Label(parent, text=props['label'])
+            label.grid(row=row, column=0, sticky=tk.W, padx=5, pady=2)
+            
+            if props['type'] == 'float':
+                entry = ttk.Entry(parent)
+                entry.grid(row=row, column=1, sticky=(tk.W, tk.E), padx=5, pady=2)
+            else:  # combo box
+                entry = ttk.Combobox(parent, values=props['values'], state='readonly')
+                entry.set(props['values'][0])  # set default value
+                entry.grid(row=row, column=1, sticky=(tk.W, tk.E), padx=5, pady=2)
+            
+            self.entries[field] = entry
 
-    def create_grouped_inputs(self):
-        row = 0
-        for group_name, fields in self.field_groups.items():
-            # Create group frame
-            group_frame = ModernWidget(self.scrollable_frame, group_name)
-            group_frame.grid(row=row, column=0, columnspan=2, sticky="ew", pady=(0, 20), padx=5)
-            
-            # Create fields within group
-            for idx, (field, properties) in enumerate(fields.items()):
-                container = ttk.Frame(group_frame)
-                container.pack(fill="x", pady=2)
-                
-                # Create label
-                label = ttk.Label(container, text=properties['label'])
-                label.pack(side="left", padx=(0, 10))
-                
-                # Create input field based on type
-                if properties['type'] == 'float':
-                    self.inputs[field] = ttk.Entry(container, width=20)
-                elif properties['type'] == 'combo':
-                    self.inputs[field] = ttk.Combobox(
-                        container,
-                        values=properties['values'],
-                        state='readonly',
-                        width=17
-                    )
-                    self.inputs[field].set(properties['values'][0])
-                
-                self.inputs[field].pack(side="right", padx=5)
-            
-            row += 1
-
-    def preprocess_input(self):
-        # Collect all fields in correct order
-        all_fields = []
-        for group in self.field_groups.values():
-            all_fields.extend(group.items())
-            
-        values = []
-        for field, properties in all_fields:
-            try:
-                if properties['type'] == 'float':
-                    value = float(self.inputs[field].get())
-                else:
-                    value = self.inputs[field].get()
-                    # Convert categorical variables to numeric
-                    if value in ['normal', 'notpresent', 'no', 'poor']:
-                        value = 0
-                    elif value in ['abnormal', 'present', 'yes', 'good']:
-                        value = 1
-                values.append(value)
-            except ValueError:
-                messagebox.showerror("Error", f"Invalid input for {properties['label']}")
-                return None
-        return np.array(values).reshape(1, -1)
+    def validate_inputs(self):
+        for field, entry in self.entries.items():
+            if self.fields[field]['type'] == 'float':
+                try:
+                    value = float(entry.get())
+                    if value < 0:
+                        messagebox.showerror("Error", f"{self.fields[field]['label']} cannot be negative!")
+                        return False
+                except ValueError:
+                    messagebox.showerror("Error", f"Please enter a valid number for {self.fields[field]['label']}")
+                    return False
+        return True
 
     def predict(self):
-        if self.model is None:
+        if not self.model:
             messagebox.showerror("Error", "Model not loaded!")
             return
-        
-        input_data = self.preprocess_input()
-        if input_data is None:
+            
+        if not self.validate_inputs():
             return
+            
+        # Get values and convert to appropriate format
+        input_data = []
+        categorical_fields = list(self.encoding_dict.keys())
+        
+        for field, entry in self.entries.items():
+            value = entry.get()
+            if field in categorical_fields:
+                # Convert categorical value to number using encoding dictionary
+                encoded_value = self.encoding_dict[field][value]
+                input_data.append(encoded_value)
+            else:
+                # Convert numeric value to float
+                input_data.append(float(value))
         
         try:
-            prediction = self.model.predict(input_data)
-            result = "Chronic Kidney Disease" if prediction[0] == 1 else "No Chronic Kidney Disease detected"
+            # Make prediction
+            input_array = np.array(input_data).reshape(1, -1)
+            prediction = self.model.predict(input_array)
             
-            # Create a custom dialog for results
-            result_dialog = tk.Toplevel(self.root)
-            result_dialog.title("Prediction Results")
-            result_dialog.geometry("400x200")
-            result_dialog.configure(bg='#f0f2f5')
-            
-            # Add some padding
-            frame = ttk.Frame(result_dialog, padding="20")
-            frame.pack(fill=tk.BOTH, expand=True)
-            
-            # Result header
-            ttk.Label(
-                frame,
-                text="Analysis Results",
-                style="Title.TLabel"
-            ).pack(pady=(0, 20))
-            
-            # Result text
-            ttk.Label(
-                frame,
-                text=result,
-                style="Subtitle.TLabel"
-            ).pack(pady=10)
-            
-            # Close button
-            ttk.Button(
-                frame,
-                text="Close",
-                command=result_dialog.destroy,
-                style="Accent.TButton"
-            ).pack(pady=20)
-            
+            if prediction[0] == 0:
+                result = "Based on the provided information, chronic kidney disease is indicated.\n\nPlease consult with a healthcare professional for proper diagnosis and treatment."
+                messagebox.showwarning("Prediction Result", result)
+            else:
+                result = "Based on the provided information, chronic kidney disease is not indicated.\n\nHowever, always consult with a healthcare professional for proper medical advice."
+                messagebox.showinfo("Prediction Result", result)
+                
         except Exception as e:
-            messagebox.showerror("Error", f"Prediction error: {str(e)}")
+            messagebox.showerror("Error", f"An error occurred during prediction: {str(e)}")
+
+def main():
+    root = tk.Tk()
+    app = KidneyDiseasePredictorGUI(root)
+    root.mainloop()
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = KidneyDiseasePredictor(root)
-    root.mainloop()
+    main()

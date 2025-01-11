@@ -157,17 +157,19 @@ Example
 - Pthreads function calls
 
   - | Thread call | Description |
-     | ----------- | ----------- |
-     | Pthread_create | Create a new thread |
-     | Pthread_exit | Terminate the calling thread |
-     | Pthread_join | Wait for a specific thread to exit |
-     | Pthread_yield | Release the CPU to let another thread run |
-     | Pthread_attr_init | Create and initalize a thread's attribute structure |
-     | Pthread_arrt_destroy | Remove a thread's attribute structure |
+    | ----------- | ----------- |
+    | Pthread_create | Create a new thread |
+    | Pthread_exit | Terminate the calling thread |
+    | Pthread_join | Wait for a specific thread to exit |
+    | Pthread_yield | Release the CPU to let another thread run |
+    | Pthread_attr_init | Create and initalize a thread's attribute structure |
+    | Pthread_arrt_destroy | Remove a thread's attribute structure |
 
 ### Threads in User Space
 
 - from kernel's pov, its managing single threded processes.
+- run on top of run-time system
+- each thread needs its own thread table; managed by run-time system
 
 - **Advantages:**
   - can be inplemented on system that does not support threads
