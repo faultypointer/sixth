@@ -36,6 +36,7 @@
               matplotlib
               seaborn
               ipykernel
+              sympy
             ]);
         };
       });
