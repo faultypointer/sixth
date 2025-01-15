@@ -20,3 +20,5 @@ graph = {
     "Urlabari": {"Kanepokhari": 12, "Rangeli": 40, "Damak": 6},
     "Damak": {"Urlabari": 6},
 }
+
+
