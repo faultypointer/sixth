@@ -37,6 +37,8 @@
               seaborn
               ipykernel
               sympy
+              torch
+              torchvision
             ]);
         };
       });
