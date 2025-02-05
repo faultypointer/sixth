@@ -30,6 +30,7 @@
               ipython
               numpy
               tkinter
+              customtkinter
               scikit-learn
               scipy
               pandas
