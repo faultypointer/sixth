@@ -40,6 +40,8 @@
               sympy
               torch
               torchvision
+              torchinfo
+              tqdm
             ]);
         };
       });
