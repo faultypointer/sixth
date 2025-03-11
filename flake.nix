@@ -31,6 +31,7 @@
               numpy
               tkinter
               customtkinter
+              networkx
               scikit-learn
               scipy
               pandas
@@ -42,6 +43,10 @@
               torchvision
               torchinfo
               tqdm
+              nltk
+              wordcloud
+              xgboost
+              umlet
             ]);
         };
       });
