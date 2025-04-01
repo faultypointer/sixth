@@ -1,0 +1,204 @@
+#+title: Dbms Fq
+#+author: faultypointer
+#+date: <2025-04-01 Tue>
+
+
+* Introduction  [3 hours]
+** Concepts and Applications
+*** TODO define database and dbms -> 1 -> 1
+** Objective and Evolution
+*** TODO advantages of dbms over file system -> 5 -> 18
+*** TODO advantages of rdbms -> 1 -> 4
+** Data Abstraction and Data Independence
+*** TODO what are the levels of abstractions -> 6 -> 15
+*** TODO significance of abstractions -> 1 -> 1
+*** TODO why physical data independence important in data modelling? -> 2 -> 4
+*** TODO what is data abstraction
+** Schema and Instances
+*** TODO explain schema and instances -> 3 -> 6
+** Concepts of DDL, DML and DCL
+*** TODO define database language -> 1 -> 2
+
+* Data Models  [7 hours]
+** E-R Diagram
+*** TODO construct ER diagram -> 12 -> 12 * 8
+*** TODO define generalization and specialization with notations and eg -> 4 -> 14
+*** TODO diff betweet degree and cardinality in ER diagram -> 1 -> 2
+*** TODO discriminator in ER diagram -> 1 -> 1
+** Attributes and Keys -> 12
+*** TODO super, candidate, primary keys (examples) -> 3 -> 9
+*** TODO foreign key constraints with example -> 1 -> 3
+** overview -> 8
+*** TODO define relational model along with foreign key contraints (examples) -> 1 -> 4
+*** TODO what are data models. various types. -> 1 -> 4
+** E-R Model -> 8
+*** TODO er relationship to relation schema (examples of different cardinalities) -> 1 -> 4
+*** TODO diff bet total and partial participation (example) -> 1 -> 4
+** Strong and Weak Entity Sets -> 4
+*** TODO what is weak entity set, identifying relationship (examples) -> 1 -> 4
+** Relationship and Relationship sets -> 2
+*** TODO unary rel. (example) -> 1 -> 2
+** Entities and Entities sets
+** Alternate Data Model (hierarchical, network, graph)
+
+* Relational Languages and Relational Model [7 hours]
+** Queries and Sub-Queries
+*** TODO  write SQL expressions -> 12 -> 12*8
+** Relational Algebra
+*** TODO write relational algebra -> 12 -> 12 * 8
+** Views
+*** TODO views in db -> 1 -> 2
+*** TODO materialized view vs normal view -> 1 -> 1
+** Introduction to SQL
+** Features of SQL
+** Set Operations
+** Relations (Joined, Derived)
+** Queries under DDL and DML Commands
+** Embedded SQL
+** Database Modification
+** QBE and domain relational calculus
+
+* Database Constraints and Normalization [6 hours]
+*** TODO dependency preserving decomposition -> 1 -> 2
+** Different Normal Forms (1st, 2nd, 3rd, BCNF, DKNF) -----------------------------------------------> 70
+*** TODO describe normal forms with eg 10 -> 41
+*** TODO purpose of normalization -> 3 -> 6
+*** TODO formal defination of BCNF -> 2 -> 5
+*** TODO types of problems for given relations -> 1 -> 5
+*** TODO determine if relation is in 2NF if not convert it -> 1 -> 5
+*** TODO how to acheive BCNF (describe the algorithm) -> 1 -> 3
+*** TODO problems without normalizations -> 1 -> 3
+*** TODO role of functional dependency in normalization -> 1 -> 2
+*** TODO what is normalization -> 1 -> 2
+** Functional Dependencies ---------------------------------------------------------------------> 33
+*** TODO partial, transitive dependency(examples) -> 4 -> 10
+*** TODO what is functional dependency -> 2 -> 4
+*** TODO functional dependency closure -> 1 -> 3
+*** TODO conditions for lossless decomposition -> 1 -> 3
+*** TODO decomposition and its desirable properties -> 1 -> 3
+*** TODO find attribute closure -> 1 -> 2
+*** TODO extraneous attributes in a functional dependency -> 1 -> 2
+*** TODO trivial and non-trivial dependency -> 1 -> 2
+*** TODO find candidate key and justify -> 1 -> 2
+*** TODO lossless join decomposition -> 1 -> 2
+** Integrity Constraints and Domain Constraints -----------------------------------------------> 14
+*** TODO types of integrity constraints (examples) -> 3 -> 11
+*** TODO diff. between primary and foreign key -> 1 -> 2
+*** TODO what is integrity constraints -> 1 -> 1
+** Assertions and Triggering -------------------------------------------------------------------> 8
+*** TODO explain workings of triggers with syntax and eg -> 1 -> 5
+*** TODO assestions with sql syntax -> 1 -> 2
+*** TODO define triggers -> 1 -> 1
+** Multi-valued and Joined Dependencies -------------------------------------------------------------> 2
+*** TODO multivalued dependency -> 1 -> 2
+* Query Processing and Optimization [4 hours]
+** Overview ------------------------------------------------------------------------------------------> 38
+*** TODO steps in query processing with flow diagram  -> 8 -> 34
+*** TODO functions of parser and optimizer -> 1 -> 2
+*** TODO define query processing -> 1 -> 2
+** Query Optimization ------------------------------------------------------------------------------------------> 31
+*** TODO diff bet. cost based and heuristic based optimization -> 2 -> 8
+*** TODO how equivalence rules for RA helpful for optimization -> 2 -> 7
+*** TODO explain process of query optimization -> 1 -> 6
+*** TODO different approaches for query optimizations -> 1 -> 4
+*** TODO how to optimize the given query -> 1 -> 4
+*** TODO heuristic optimization -> 1 -> 2
+** Evaluation of Expressions -------------------------------------------------------------------------------> 20
+*** TODO method used for eval. of entire expression tree -> 2 -> 9
+*** TODO how pipelining diff. from materialization -> 1 -> 5
+*** TODO pipelining of evaluation(examples) -> 1 -> 3
+*** TODO how pipelining improves query eval. -> 1 -> 3
+** Query Cost Estimation ---------------------------------------------------------------------------------> 6
+*** TODO compare nested loop join and block nested loop join with ref. to its algorithm and cost anal. -> 1 -> 6
+** Query Operations
+** Query Decomposition
+** Performance Tuning
+
+* File Structure and Hashing  [4 hours]
+** Indices -----------------------------------------------------------------------------------------------> 26
+*** TODO dense and sparse index (sometimes advantages) -> 4 -> 10
+*** TODO order and hash index -> 3 -> 7
+*** TODO primary and secondary index -> 2 -> 4
+*** TODO how record is searched from sparse seq. index -> 1 -> 3
+*** TODO index sequential file -> 1 -> 2
+** Raid -------------------------------------------------------------------------------------------------> 29
+*** TODO RAID Levels -> 4 -> 11
+*** TODO what is RAID, advantages/use -> 5 -> 7
+*** TODO which RAID best for most application explain -> 1 -> 3
+*** TODO which RAID for safety applications explain -> 1 -> 3
+*** TODO how to select appropriate level -> 3 -> 3
+*** TODO block level stripping -> 1 -> 2
+** Hashing Concepts, Static and Dynamic Hashing ---------------------------------------------------------> 17
+*** TODO workings of static hashing with examples -> 2 -> 7
+*** TODO limitations of static hashing and how extendable hashing overcomes it -> 2 -> 7
+*** TODO hashing and indexing -> 2 -> 3
+** B+ tree index -------------------------------------------------------------------------------------------> 10
+*** TODO perform insertions in B+ tree for given sequence -> 1 -> 6
+*** TODO describe B+ tree structure for indexing -> 1 -> 4
+** Records Organizations --------------------------------------------------------------------------------> 8
+*** TODO fixed and variable length record (difference, example) -> 1 -> 4
+*** TODO sequential file organization -> 1 -> 2
+*** TODO multi-table clustering file org. -> 1 -> 2
+** Disks and Storage
+
+* Transactions processing and Concurrency Control [6 hours]
+** Serializability Concept -----------------------------------------------------------------------------------> 28
+*** TODO concept of conflict serializability -> 2 -> 8
+*** TODO explain if given schedule is conflict serializable if so determine serial schedule -> 2 -> 8
+*** TODO determine schedule is conflict serializable from given graph -> 1 -> 4
+*** TODO concept of view serializability -> 1 -> 4
+*** TODO conflict vs view serializability -> 1 -> 4
+*** TODO why emphasis conflict over view serializable -> 1 -> 3
+** overview --------------------------------------------------------------------------------------------------> 26
+*** TODO possible transactional states (state transition diagram) -> 6 -> 20
+*** TODO how graph based protocol maintains concurrency -> 1 -> 4
+*** TODO define transation and transaction processing system -> 1 -> 2
+
+** ACID properties -------------------------------------------------------------------------------------------> 20
+*** TODO transactions and its properties -> 5 -> 18
+*** TODO situations that occur if no proper isolation -> 1 -> 2
+** Deadlock handling and Prevention ------------------------------------------------------------------------------> 15
+*** TODO explain any two deadlock handling mechanism(examples) -> 1 -> 5
+*** TODO deadlock prevention strategies -> 1 -> 4
+*** TODO how deadlock arises -> 2 -> 4
+*** TODO wait and die -> 1 -> 2
+
+** Lock based Protocols -----------------------------------------------------------------------------------------> 14
+*** TODO explain two phase locking protocol for concurrency control -> 4 -> 14
+** Concurrent Executions ---------------------------------------------------------------------------------------> 2
+*** TODO schedules -> 1 -> 2
+* Crash Recovery  [4 hours]
+** Log-based Recovery --------------------------------------------------------------------------------------> 27
+*** TODO how does log based recovery work -> 3 -> 10
+*** TODO conditions of using undo and redo -> 2 -> 10
+*** TODO immediate database modification -> 1 -> 4
+*** TODO deferred database modification technique -> 1 -> 3
+** overview -------------------------------------------------------------------------------------------------> 19
+*** TODO explain remote backup system (architecture) -> 4 -> 15
+*** TODO stable storage -> 2 -> 4
+** Shadow paging ---------------------------------------------------------------------------------------------------> 14
+**** TODO diff between shadow paging and log based recovery -> 4 -> 14
+(sometimes in terms of ease of impl. and overhead cost)
+*** Advanced Recovery Techniques
+
+** Failure Classification ------------------------------------------------------------------------------------> 13
+*** TODO types of failures -> 3 -> 10
+*** TODO causes of failures -> 1 -> 3
+** Recovery and Atomicity -------------------------------------------------------------------------------------------> 9
+*** TODO recovery actions in case of failures for given transactions -> 1 -> 4
+*** TODO need of recovery techniques -> 1 -> 3
+*** TODO purpose of checkpoints in recovery mechanism -> 1 -> 2
+* Advanced database Concepts [4 hours]
+** Properties of Parallel and Distributed Databases ----------------------------------------------------------> 31
+*** TODO sn on distributed db -> 4 -> 13
+*** TODO short note on parallel db -> 3 -> 9
+*** TODO transparency of distributed db -> 1 -> 3
+*** TODO fragmentation in distributed database -> 1 -> 3
+*** TODO homo vs hetero distributed database -> 1 -> 3
+** Concept of Data warehouse Database ------------------------------------------------------------------------------> 17
+*** TODO short note on data warehouse with components -> 5 -> 17
+** Concept of Spatial Database ----------------------------------------------------------------------------------> 14
+*** TODO sn on spatial db -> 5 -> 14
+** Concept of Object-Oriented and Distributed Database Model----------------------------------------------------- -> 9
+*** TODO sn on OO database -> 2 -> 6
+*** TODO ORM -> 1 -> 3
