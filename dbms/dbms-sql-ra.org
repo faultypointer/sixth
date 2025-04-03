@@ -1,0 +1,34 @@
+#+title: Dbms Sql Ra
+#+author: faultypointer
+#+date: <2025-04-03 Thu>
+
+* 2080 chaitra
+
+** Relational Algebra
+
+Employee(empid, ename, address, title, headid)
+Project(pid, pname, budget, location)
+Work(empid, pid, responsibility, duration)
+Payment(title, salary)
+
+*** Working in kathmandu
+Wrire RA to find the name and salary of employees working in 'kathmandu'.
+\[ \Pi_{ename, salary}((\delta_{location = 'kathmandu'}(Project) \bowtie Work \bowtie Employee) \bowtie Payment)  \]
+
+*** Employee with their head
+Write RA to show the employee name along with their head name. (note the data in headid is empid of their corresponding head)
+\[
+\Pi_{E.ename, H.ename}((\rho_{E}(Employee)) \bowtie_{E.headid = H.empid} (\rho_{H}(Employee)))
+\]
+
+*** Live with project
+Write RA to show the details of those employees who live in the same location of their project.
+\[
+\Pi_{empid, ename, address, title, salary}((\delta_{address = location}(Employee \bowtie Work \bowtie Project))\bowtie Payment)
+\]
+
+*** Project duration more than 5 years
+Display employee's title, name along with their project name and salary if project duration is more than 5 years
+\[
+\Pi_{title, ename, pname, salary}((\delta_{duration > 5}(Work)) \bowtie Employee \bowtie Project \bowtie Payment)
+\]
